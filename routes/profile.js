@@ -13,7 +13,7 @@ router.get('/:id', async(req, res, next) => {
    }
 });
 
-router.put('/:id/editProfile', (req, res, next) => {
+router.put('/:id/edit', (req, res, next) => {
    User.findByIdAndUpdate(
       req.params.id ,
       {
