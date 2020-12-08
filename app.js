@@ -68,6 +68,11 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/auth", auth);
 app.use("/profile", profile);
 
+//ROUTE FOR SERVING REACT APP (index.html)
+// app.use((req, res) => {
+//   res.sendFile(__dirname + "/public/index.html");
+// });
+
 // ERROR HANDLING
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -24,7 +24,7 @@ router.post("/signup",
     try {
       const emailExists = await User.findOne({email}, "email");
 	
-      if (emailExists) return next(createError(400, "user already exists"));
+      if (emailExists) return next(createError(400, "email already exists"));
     
       else {
         const salt = bcrypt.genSaltSync(saltRounds);
@@ -65,7 +65,7 @@ router.post("/login",
           res.status(200).json(user);
           return;
         } else {
-          next(createError(401, "username or password incorrect"));
+          next(createError(401, "email or password incorrect"));
         }
       } catch (error) {
         next(error);

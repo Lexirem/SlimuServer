@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const User = require('../models/user');
 
-
+//ruta profile
 router.get('/:id', async(req, res, next) => {
    let myUser = await User.findById(req.params.id);
    try{
@@ -19,7 +19,7 @@ router.put('/:id/edit', (req, res, next) => {
       {
          username: req.body.username,
          email: req.body.email,
-         favorite: req.body.favorite,
+         favorite: req.body.myAnime,
          image: req.body.image,
       },
       {new: true }
@@ -32,3 +32,7 @@ router.put('/:id/edit', (req, res, next) => {
       console.log(error);
    });
 });
+
+
+
+module.exports = router;
