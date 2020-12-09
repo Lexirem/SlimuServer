@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
 const User = require('../models/user');
 
 //ruta profile
@@ -19,7 +18,6 @@ router.put('/:id/edit', (req, res, next) => {
       {
          username: req.body.username,
          email: req.body.email,
-         favorite: req.body.myAnime,
          image: req.body.image,
       },
       {new: true }
