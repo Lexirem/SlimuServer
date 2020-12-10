@@ -49,7 +49,7 @@ router.post("/favorites/:id", (req, res, next) => {
 
 router.delete("/favourtes/:id", (req, res, next) => {
    let { image, name } = req.body;
-   User.findByIdAndUpdate(
+   User.findByIdAndRemove(
       req.params.id,{
          $pull: {myAnime: {image, name}}
       }
