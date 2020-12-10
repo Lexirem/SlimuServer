@@ -5,7 +5,7 @@ const userSchema = new Schema({
     username: String,
     email: String,
     password: String,
-    myList: [{}],
+    myAnime: [{name: String, image: String}],
     image: String
 },{
     timestamps: {

@@ -31,6 +31,37 @@ router.put('/:id/edit', (req, res, next) => {
    });
 });
 
+router.post("/favorites/:id", (req, res, next) => {
+   let { image, name } = req.body;
+   console.log(req.body)
+   User.findByIdAndUpdate(
+      req.params.id,{
+         $push: {myAnime: {image, name}}
+      }
+   )
+   .then((updateProfile) => {
+      res.status(200).json(updateProfile)
+   })
+   .catch((error) =>{
+      console.log(error)
+   });
+});
+
+router.delete("/favourtes/:id", (req, res, next) => {
+   let { image, name } = req.body;
+   User.findByIdAndUpdate(
+      req.params.id,{
+         $pull: {myAnime: {image, name}}
+      }
+   )
+   .then((updateProfile) => {
+      res.status(200).json(updateProfile)
+   })
+   .catch((error) => {
+      console.log(error)
+   });
+});
+
 
 
 module.exports = router;
