@@ -11,7 +11,9 @@ const MongoStore = require("connect-mongo")(session);
 const cors = require("cors");
 
 const auth = require("./routes/auth");
-const profile = require("./routes/profile")
+const profile = require("./routes/profile");
+const upload = require("./routes/file-upload-routes");
+
 
 // MONGOOSE CONNECTION
 mongoose
@@ -67,11 +69,13 @@ app.use(express.static(path.join(__dirname, "public")));
 // ROUTER MIDDLEWARE
 app.use("/auth", auth);
 app.use("/profile", profile);
+app.use("/upload", upload);
+
 
 //ROUTE FOR SERVING REACT APP (index.html)
-// app.use((req, res) => {
-//   res.sendFile(__dirname + "/public/index.html");
-// });
+app.use((req, res) => {
+  res.sendFile(__dirname + "/public/index.html");
+});
 
 // ERROR HANDLING
 // catch 404 and forward to error handler

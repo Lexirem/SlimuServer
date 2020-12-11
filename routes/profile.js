@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const mongoose = require("mongoose");
+const uploadCloud = require('../configs/cloudinary-setup');
+const cloudinaryStorage = require('multer-storage-cloudinary');
+const multer = require('multer');
 
 //ruta profile
 router.get('/:id', async(req, res, next) => {
