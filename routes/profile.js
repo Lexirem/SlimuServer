@@ -51,11 +51,12 @@ router.post("/favorites/:id", (req, res, next) => {
    });
 });
 
-router.delete("/favourtes/:id", (req, res, next) => {
-   let { image, name } = req.body;
-   User.findByIdAndRemove(
+router.put("/favorites/:id", (req, res, next) => {
+   console.log(req.body)
+   let { image, name, _id } = req.body;
+   User.findByIdAndUpdate(
       req.params.id,{
-         $pull: {myAnime: {image, name}}
+         $pull: {myAnime: {_id}}
       }
    )
    .then((updateProfile) => {
