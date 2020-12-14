@@ -15,9 +15,9 @@ const {
 //  POST '/signup'
 
 router.post("/signup",
-  isNotLoggedIn(),
+  // isNotLoggedIn(),
     
-  validationLoggin(),
+  // validationLoggin(),
   async (req, res, next) => {
     const { email, password } = req.body;
 
@@ -47,9 +47,9 @@ router.post("/signup",
 //  POST '/login'
 
 router.post("/login",
-  isNotLoggedIn(),
+  // isNotLoggedIn(),
     
-  validationLoggin(),
+  // validationLoggin(),
     async (req, res, next) => {
       const { email, password } = req.body;
       try {
