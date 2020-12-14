@@ -75,7 +75,7 @@ router.post("/login",
 
 // POST '/logout'
 
-router.post("/logout", isLoggedIn(), (req, res, next) => {          
+router.post("/logout",  (req, res, next) => {          
   req.session.destroy();
   res
     .status(204) 
@@ -86,7 +86,7 @@ router.post("/logout", isLoggedIn(), (req, res, next) => {
 
 // GET '/private'   --> Only for testing
 
-router.get("/private", isLoggedIn(), (req, res, next) => {
+router.get("/private", (req, res, next) => {
   res
     .status(200) 
     .json({ message: "Test - User is logged in" });
@@ -95,7 +95,7 @@ router.get("/private", isLoggedIn(), (req, res, next) => {
 
 // GET '/me'
 
-router.get("/me", isLoggedIn(), (req, res, next) => {
+router.get("/me",  (req, res, next) => {
   req.session.currentUser.password = "*";
   res.json(req.session.currentUser);
 });
