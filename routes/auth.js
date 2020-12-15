@@ -22,7 +22,7 @@ router.post("/signup",
     const { email, password } = req.body;
 
     try {
-      const emailExists = await User.findOne({email}, "email");
+      const emailExists = await User.find({email}, "email");
 	
       if (emailExists) return next(createError(400, "email already exists"));
     
@@ -53,7 +53,7 @@ router.post("/login",
     async (req, res, next) => {
       const { email, password } = req.body;
       try {
-        const user = await User.findOne({ email });
+        const user = await User.find({ email });
         
         if (!user) {
           next(createError(404));
