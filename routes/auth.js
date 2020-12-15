@@ -1,9 +1,9 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const createError = require("http-errors");
-const bcrypt = require("bcrypt");
+const createError = require('http-errors');
+const bcrypt = require('bcryptjs');
 const saltRounds = 10;
-const User = require("../models/user");
+const User = require('../models/user');
 
 // HELPER FUNCTIONS
 const {
@@ -14,29 +14,26 @@ const {
 
 //  POST '/signup'
 
-router.post("/signup",
-  // isNotLoggedIn(),
-    
-  // validationLoggin(),
+router.post('/signup',
+  
   async (req, res, next) => {
     const { email, password } = req.body;
-
     try {
-      const emailExists = await User.find({email}, "email");
-	
-      if (emailExists) return next(createError(400, "email already exists"));
-    
+      // chequea si el username ya existe en la BD
+      const usernameExists = await User.findOne({ email}, 'email');
+      // si el usuario ya existe, pasa el error a middleware error usando next()
+      if (usernameExists) return next(createError(400));
       else {
+        // en caso contratio, si el usuario no existe, hace hash del password y crea un nuevo usuario en la BD
         const salt = bcrypt.genSaltSync(saltRounds);
         const hashPass = bcrypt.hashSync(password, salt);
-        
-		    const newUser = await User.create({ email, password: hashPass})
-        
+        const newUser = await User.create({ email, password: hashPass});
+        // luego asignamos el nuevo documento user a req.session.currentUser y luego enviamos la respuesta en json
         req.session.currentUser = newUser;
         res
-            .status(200)
-            .json(newUser)
-      } 
+          .status(200) //  OK
+          .json(newUser);
+      }
     } catch (error) {
       next(error);
     }
@@ -45,7 +42,7 @@ router.post("/signup",
 
 
 //LOGIN POST
-router.post('/',
+router.post('/login',
   //isNotLoggedIn(),
   //validationLoggin(),
   async (req, res, next) => {
@@ -53,6 +50,7 @@ router.post('/',
     try {
       // revisa si el usuario existe en la BD
       const user = await User.findOne({ email });
+      
       // si el usuario no existe, pasa el error al middleware error usando next()
       if (!user) {
         next(createError(404));
@@ -60,6 +58,7 @@ router.post('/',
       // si el usuario existe, hace hash del password y lo compara con el de la BD
       // loguea al usuario asignando el document a req.session.currentUser, y devuelve un json con el user
       else if (bcrypt.compareSync(password, user.password,)) {
+        console.log(user, 'ser')
         req.session.currentUser = user;
         res.status(200).json(user);
         return;
@@ -99,6 +98,8 @@ router.get("/me",  (req, res, next) => {
 });
 
 module.exports = router;
+
+
 
 
 
